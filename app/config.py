@@ -9,6 +9,8 @@ class Settings(BaseSettings):
 
     llm_provider: str = "ollama"
     llm_model: str = "llama3.1:8b"
+    groq_api_key: str = ""
+    groq_llm_model: str = "llama-3.3-70b-versatile"
     port: int = 8000
 
     mcp_enabled: bool = False

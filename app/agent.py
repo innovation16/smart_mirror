@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from langchain_core.messages import AIMessage, HumanMessage
+from langchain_groq import ChatGroq
 from langchain_ollama import ChatOllama
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, MessagesState, StateGraph
@@ -23,6 +24,12 @@ class ChatAgent:
 
         if provider == "ollama":
             return ChatOllama(model=settings.llm_model, temperature=0)
+        if provider == "groq":
+            return ChatGroq(
+                model=settings.groq_llm_model,
+                api_key=settings.groq_api_key,
+                temperature=0,
+            )
 
         raise ValueError(
             f"Unsupported LLM_PROVIDER='{settings.llm_provider}'. "
