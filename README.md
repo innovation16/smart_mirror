@@ -60,7 +60,7 @@ For running on a Raspberry Pi-powered smart mirror:
 #### Automated Setup (Recommended)
 Run the automated setup script:
 ```bash
-wget https://raw.githubusercontent.com/your-username/smart_mirror/main/setup_pi.sh
+wget https://raw.githubusercontent.com/innovation16/smart_mirror/main/setup_pi.sh
 chmod +x setup_pi.sh
 ./setup_pi.sh
 ```
@@ -81,7 +81,7 @@ sudo apt install python3 python3-pip python3-venv git -y
 
 #### 2) Clone the repository
 ```bash
-git clone https://github.com/your-username/smart_mirror.git
+git clone https://github.com/innovation16/smart_mirror.git
 cd smart_mirror
 ```
 
