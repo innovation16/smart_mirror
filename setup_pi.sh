@@ -28,9 +28,12 @@ fi
 
 cd smart_mirror
 
-# Set up Python virtual environment
-echo "🔧 Setting up Python virtual environment..."
-python3 -m venv .venv
+# Set up Python virtual environment (only if not already set up)
+if [ ! -d ".venv" ]; then
+    echo "🔧 Setting up Python virtual environment..."
+    python3 -m venv .venv
+fi
+
 source .venv/bin/activate
 
 # Install Python dependencies
@@ -39,14 +42,17 @@ pip install -r requirements.txt
 
 # Configure environment
 echo "⚙️  Configuring environment..."
-if [ ! -f ".env" ]; then
-    cp .env.example .env
-    sed -i 's/LLM_PROVIDER=.*/LLM_PROVIDER=groq/' .env
+cp .env.example .env
+sed -i 's/LLM_PROVIDER=.*/LLM_PROVIDER=groq/' .env
+
+if [ -z "$GROQ_API_KEY" ]; then
     echo ""
     echo "⚠️  IMPORTANT: Add your Groq API key to .env"
     echo "Get it from: https://console.groq.com/keys"
     read -p "Enter your Groq API key: " GROQ_KEY
     sed -i "s/GROQ_API_KEY=.*/GROQ_API_KEY=$GROQ_KEY/" .env
+else
+    sed -i "s/GROQ_API_KEY=.*/GROQ_API_KEY=$GROQ_API_KEY/" .env
 fi
 
 # Create systemd service
@@ -73,7 +79,7 @@ EOF
 echo "▶️  Enabling and starting service..."
 sudo systemctl daemon-reload
 sudo systemctl enable smart-mirror
-sudo systemctl start smart-mirror
+sudo systemctl restart smart-mirror
 
 # Wait a moment for service to start
 sleep 5
